@@ -1,4 +1,4 @@
-package part_1_sorting.lesson_4_quick_sort;
+package part_1_sorting.lesson_5_quick_sort;
 
 // In-place algo
 // Unstable algo
