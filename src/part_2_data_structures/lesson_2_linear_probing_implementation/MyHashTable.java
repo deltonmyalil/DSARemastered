@@ -12,9 +12,23 @@ public class MyHashTable {
 	}//doesnt handle collision
 
 	public void put(String key, Employee employee) {
-		int hashkey = hashKey(key);
-		if (hashtable[hashkey] != null) System.out.println("Collision. Hashtable unaltered");
-		else hashtable[hashkey] = employee;
+		int hashedKey = hashKey(key);
+		if(occupied(hashedKey)) {
+			int stopIndex = hashedKey; //already looked
+			if(hashedKey == hashtable.length-1)
+				hashedKey=0;
+			else
+				hashedKey++;
+			//the above 4 lines set the first probe position
+
+			while(occupied(hashedKey) && hashedKey!=stopIndex) {
+				hashedKey = (hashedKey+1)%hashtable.length;
+			}
+			//the above 2 lines set the next probe positions
+		}
+
+		if (occupied(hashedKey)) System.out.println("HashTable is full. Linear Probing failed");
+		else hashtable[hashedKey] = employee;
 	}
 
 	public Employee get(String key){
@@ -23,5 +37,10 @@ public class MyHashTable {
 
 	public void printHashTable() {
 		for(int i = 0; i<hashtable.length;i++) System.out.println(hashtable[i]);
+	}
+
+	private boolean occupied(int index) {
+		if (hashtable[index] != null) return true; //it is occupied
+		else return false; //it is free
 	}
 }
